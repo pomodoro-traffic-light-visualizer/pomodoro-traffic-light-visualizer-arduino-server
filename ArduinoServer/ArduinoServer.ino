@@ -18,6 +18,8 @@
 #define RED_4 37
 #define GREEN_4 35
 
+#define RESET 1
+
 void setup()
 {
   // put your setup code here, to run once:
@@ -89,7 +91,7 @@ void timerTick()
 {
   if (digitalRead(33) == 1)
   {
-    Serial.write("Reset");
+    Serial.write(RESET);
   }
 }
 
