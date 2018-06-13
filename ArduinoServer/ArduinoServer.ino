@@ -1,7 +1,7 @@
 #include <TimerOne.h>
 
 // Message Format:
-// 1st byte: Traffic light number
+// 1st byte: Traffic light number (1-3, 4-6, 7-8, 9-10)
 // 2nd byte: 0 == off, 1 == on
 
 #define RED_1 53
