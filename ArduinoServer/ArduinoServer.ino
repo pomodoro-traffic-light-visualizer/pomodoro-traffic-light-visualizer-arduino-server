@@ -19,9 +19,12 @@
 #define GREEN_4 35
 
 #define RESET 1
+#define ARDUNIO_IS_READY 2
+
+bool isReady = false;
 
 void setup()
-{
+{  
   // put your setup code here, to run once:
   pinMode(53, OUTPUT);
   pinMode(51, OUTPUT);
@@ -34,26 +37,46 @@ void setup()
   pinMode(37, OUTPUT);
   pinMode(35, OUTPUT);
   pinMode(33, INPUT);
-  
-  Timer1.initialize(100000); 
+
+  Timer1.initialize(100000);
   Timer1.attachInterrupt(timerTick);
 
   Serial.begin(115200);
+
+  Serial.write(ARDUNIO_IS_READY);
+  Serial.flush();
 }
 
 void loop()
 {
   byte lastPeek;
-  
-  // put your main code here, to run repeatedly:
-  if(Serial.available() > 1)
+
+  // TODO Muss wieder raus
+  // return;
+
+  if (!isReady)
   {
+    return;
+  }
+
+  // put your main code here, to run repeatedly:
+  if (Serial.available() > 1)
+  {
+    // Muss wieder raus
+    byte readed;
+
+    readed = Serial.read();
+
+    Serial.write(readed);
+
+    return;
+
     lastPeek = Serial.peek();
-    
+
     // Reset command
-    if(lastPeek == 100)
+    if (lastPeek == 100)
     {
-      while(Serial.available() > 0)
+      while (Serial.available() > 0)
       {
         Serial.read();
       }
@@ -70,14 +93,14 @@ void ResetLights()
   digitalWrite(RED_1, LOW);
   digitalWrite(YELLOW_1, LOW);
   digitalWrite(GREEN_1, HIGH);
-  
+
   digitalWrite(RED_2, LOW);
   digitalWrite(YELLOW_2, LOW);
   digitalWrite(GREEN_2, HIGH);
-  
+
   digitalWrite(RED_3, LOW);
   digitalWrite(GREEN_3, HIGH);
-  
+
   digitalWrite(RED_4, LOW);
   digitalWrite(GREEN_4, HIGH);
 }
