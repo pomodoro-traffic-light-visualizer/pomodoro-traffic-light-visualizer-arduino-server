@@ -20,6 +20,7 @@
 
 #define RESET 1
 #define ARDUNIO_IS_READY 2
+#define PLUGIN_IS_READY 3
 
 bool isReady = false;
 
@@ -44,31 +45,45 @@ void setup()
   Serial.begin(115200);
 
   Serial.write(ARDUNIO_IS_READY);
-  Serial.flush();
 }
 
 void loop()
 {
   byte lastPeek;
 
-  // TODO Muss wieder raus
-  // return;
-
-  if (!isReady)
-  {
-    return;
-  }
-
   // put your main code here, to run repeatedly:
   if (Serial.available() > 1)
   {
-    // Muss wieder raus
-    byte readed;
+    byte readByte;
 
-    readed = Serial.read();
+    readByte = Serial.read();
+    
+    if (readByte == PLUGIN_IS_READY)
+    {
+      isReady = true;
 
-    Serial.write(readed);
+      Serial.write(ARDUNIO_IS_READY);
+      
+      return;
+    }
 
+    if (readByte == RED_1)
+    {
+      Serial.write(readByte);
+      return;
+    }
+
+    Serial.write(100);
+    return;
+
+    if (!isReady)
+    {
+      return;
+    }
+
+    Serial.write(readByte);
+
+    // TODO Muss wieder raus
     return;
 
     lastPeek = Serial.peek();
