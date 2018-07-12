@@ -18,26 +18,25 @@
 #define RED_4 37
 #define GREEN_4 35
 
-#define RESET 1
 #define ARDUNIO_IS_READY 2
-#define PLUGIN_IS_READY 3
+
+#define BUTTON_CLICKED 33
 
 bool isReady = false;
 
 void setup()
-{  
-  // put your setup code here, to run once:
-  pinMode(53, OUTPUT);
-  pinMode(51, OUTPUT);
-  pinMode(49, OUTPUT);
-  pinMode(47, OUTPUT);
-  pinMode(45, OUTPUT);
-  pinMode(43, OUTPUT);
-  pinMode(41, OUTPUT);
-  pinMode(39, OUTPUT);
-  pinMode(37, OUTPUT);
-  pinMode(35, OUTPUT);
-  pinMode(33, INPUT);
+{
+  pinMode(RED_1, OUTPUT);
+  pinMode(YELLOW_1, OUTPUT);
+  pinMode(GREEN_1, OUTPUT);
+  pinMode(RED_2, OUTPUT);
+  pinMode(YELLOW_2, OUTPUT);
+  pinMode(GREEN_2, OUTPUT);
+  pinMode(RED_3, OUTPUT);
+  pinMode(GREEN_3, OUTPUT);
+  pinMode(RED_4, OUTPUT);
+  pinMode(GREEN_4, OUTPUT);
+  pinMode(BUTTON_CLICKED, INPUT);
 
   Timer1.initialize(100000);
   Timer1.attachInterrupt(timerTick);
@@ -49,87 +48,26 @@ void setup()
 
 void loop()
 {
-  byte lastPeek;
-
-  // put your main code here, to run repeatedly:
   if (Serial.available() > 1)
   {
-    byte readByte;
-
-    readByte = Serial.read();
-    
-    if (readByte == PLUGIN_IS_READY)
-    {
-      isReady = true;
-
-      Serial.write(ARDUNIO_IS_READY);
-      
-      return;
-    }
-
-    if (readByte == RED_1)
-    {
-      Serial.write(readByte);
-      return;
-    }
-
-    Serial.write(100);
-    return;
-
-    if (!isReady)
-    {
-      return;
-    }
-
-    Serial.write(readByte);
-
-    // TODO Muss wieder raus
-    return;
-
-    lastPeek = Serial.peek();
-
-    // Reset command
-    if (lastPeek == 100)
-    {
-      while (Serial.available() > 0)
-      {
-        Serial.read();
-      }
-    }
-    else
-    {
-      SetLight(Serial.read(), Serial.read());
-    }
+    SetLight(Serial.read(), Serial.read());
   }
 }
 
-void ResetLights()
+// TODO @David Richtige Logik verwenden
+void SetLight(byte trafficLightState, byte trafficLightNumber)
 {
-  digitalWrite(RED_1, LOW);
-  digitalWrite(YELLOW_1, LOW);
-  digitalWrite(GREEN_1, HIGH);
-
-  digitalWrite(RED_2, LOW);
-  digitalWrite(YELLOW_2, LOW);
-  digitalWrite(GREEN_2, HIGH);
-
-  digitalWrite(RED_3, LOW);
-  digitalWrite(GREEN_3, HIGH);
-
-  digitalWrite(RED_4, LOW);
-  digitalWrite(GREEN_4, HIGH);
-}
-
-void SetLight(byte trafficLightNumber, byte trafficLightState)
-{
-  digitalWrite(35 + ((trafficLightNumber - 1) * 2), trafficLightState);
+  Serial.write(trafficLightNumber);
+  Serial.write(trafficLightState);
+  
+  // digitalWrite(trafficLightNumber, trafficLightState);
 }
 
 void timerTick()
 {
-  if (digitalRead(33) == 1)
+  if (digitalRead(BUTTON_CLICKED) == 1)
   {
-    Serial.write(RESET);
+    Serial.write(BUTTON_CLICKED);
   }
 }
 
