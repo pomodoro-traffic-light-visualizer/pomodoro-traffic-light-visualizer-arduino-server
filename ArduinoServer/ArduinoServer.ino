@@ -54,13 +54,22 @@ void loop()
   }
 }
 
-// TODO @David Richtige Logik verwenden
 void SetLight(byte trafficLightState, byte trafficLightNumber)
 {
-  Serial.write(trafficLightNumber);
-  Serial.write(trafficLightState);
-  
-  // digitalWrite(trafficLightNumber, trafficLightState);
+  // Serial.write(trafficLightNumber);
+  // Serial.write(trafficLightState);
+
+  if (trafficLightState == 1)
+  {
+    digitalWrite(trafficLightNumber, HIGH);
+    return;
+  }
+
+  if (trafficLightState == 0)
+  {
+    digitalWrite(trafficLightNumber, LOW);
+    return;
+  }
 }
 
 void timerTick()
