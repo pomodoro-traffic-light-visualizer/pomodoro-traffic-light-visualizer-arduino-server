@@ -36,7 +36,7 @@ void setup()
   pinMode(GREEN_3, OUTPUT);
   pinMode(RED_4, OUTPUT);
   pinMode(GREEN_4, OUTPUT);
-  pinMode(BUTTON_CLICKED, INPUT);
+  pinMode(BUTTON_CLICKED, INPUT_PULLUP);
 
   Timer1.initialize(100000);
   Timer1.attachInterrupt(timerTick);
@@ -74,9 +74,11 @@ void SetLight(byte trafficLightState, byte trafficLightNumber)
 
 void timerTick()
 {
-  if (digitalRead(BUTTON_CLICKED) == 1)
+  int buttonClicked = digitalRead(BUTTON_CLICKED);
+  
+  if (buttonClicked == LOW)
   {
-    Serial.write(BUTTON_CLICKED);
+     Serial.write(BUTTON_CLICKED);
   }
 }
 
