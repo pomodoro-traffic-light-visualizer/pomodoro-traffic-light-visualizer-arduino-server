@@ -56,20 +56,11 @@ void loop()
 
 void SetLight(byte trafficLightState, byte trafficLightNumber)
 {
+  // Was used for debugging
   // Serial.write(trafficLightNumber);
   // Serial.write(trafficLightState);
 
-  if (trafficLightState == 1)
-  {
-    digitalWrite(trafficLightNumber, HIGH);
-    return;
-  }
-
-  if (trafficLightState == 0)
-  {
-    digitalWrite(trafficLightNumber, LOW);
-    return;
-  }
+  digitalWrite(trafficLightNumber, trafficLightState);
 }
 
 void timerTick()
