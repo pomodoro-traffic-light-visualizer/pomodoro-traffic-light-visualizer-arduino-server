@@ -8,15 +8,15 @@
 #define YELLOW_1 51
 #define GREEN_1 49
 
-#define RED_2 47
+#define RED_2 43
 #define YELLOW_2 45
-#define GREEN_2 43
+#define GREEN_2 47
 
 #define RED_3 41
 #define GREEN_3 39
 
-#define RED_4 37
-#define GREEN_4 35
+#define RED_4 35
+#define GREEN_4 37
 
 #define ARDUNIO_IS_READY 2
 
