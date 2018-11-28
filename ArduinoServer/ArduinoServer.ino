@@ -5,18 +5,18 @@
 // 2nd byte: 0 == off, 1 == on
 
 #define RED_1 53
-#define YELLOW_1 51
-#define GREEN_1 49
+#define YELLOW_1 43
+#define GREEN_1 39
 
-#define RED_2 43
-#define YELLOW_2 45
-#define GREEN_2 47
+#define RED_2 45
+#define YELLOW_2 47
+#define GREEN_2 35
 
-#define RED_3 41
-#define GREEN_3 39
+#define RED_3 51
+#define GREEN_3 49
 
-#define RED_4 35
-#define GREEN_4 37
+#define RED_4 37
+#define GREEN_4 41
 
 #define ARDUNIO_IS_READY 2
 
