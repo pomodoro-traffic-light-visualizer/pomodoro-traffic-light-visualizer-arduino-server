@@ -22,8 +22,6 @@
 
 #define BUTTON_CLICKED 33
 
-bool isReady = false;
-
 void setup()
 {
   pinMode(RED_1, OUTPUT);
@@ -38,7 +36,7 @@ void setup()
   pinMode(GREEN_4, OUTPUT);
   pinMode(BUTTON_CLICKED, INPUT_PULLUP);
 
-  Timer1.initialize(100000);
+  Timer1.initialize(0.1 * 100000); //Mikrosekunden (0.1 = Sekunden)
   Timer1.attachInterrupt(timerTick);
 
   Serial.begin(115200);
